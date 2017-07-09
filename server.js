@@ -5,6 +5,7 @@ var Bean = require('ble-bean');
 var beanStream = require('ble-bean-stream');
 var express = require('express');
 var bodyParser = require('body-parser');
+var cors = require('express-cors')
 var app = express();
 
 
@@ -18,9 +19,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");;
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+ 
+app.use(cors({
+  allowedOrigins: [
+    '*.herokuapp.com', '*'
+  ]
+}))
 // 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@ds019746.mlab.com:19746/heroku_8d8nzwb1'
 mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mlab.com:51702/heroku_1gsdf4dv').then(function(database){
 
@@ -40,13 +47,12 @@ app.post('/collect_data', function (req, res, next) {
   console.log('req: ', req.body);
   let request = req.body,
       timeStamp = request.timeStamp,
-      device = request.device,
       uuid = request.uuid,
       temp = request.temp;
 
 
   // to do: handle new sensortag
-  test_db.update({ 'device': device }, {'$push': {'data': {'timeStamp': timeStamp, 'temp': temp}}})
+  test_db.update({ 'uuid': uuid }, {'$push': {'data': {'timeStamp': timeStamp, 'temp': temp}}})
 
   res.send('Got a POST request');
 })
