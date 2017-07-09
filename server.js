@@ -5,7 +5,6 @@ var Bean = require('ble-bean');
 var beanStream = require('ble-bean-stream');
 var express = require('express');
 var bodyParser = require('body-parser');
-var cors = require('express-cors')
 var app = express();
 
 
@@ -23,11 +22,6 @@ app.use(function(req, res, next) {
   next();
 });
  
-app.use(cors({
-  allowedOrigins: [
-    '*.herokuapp.com', '*'
-  ]
-}))
 // 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@ds019746.mlab.com:19746/heroku_8d8nzwb1'
 mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mlab.com:51702/heroku_1gsdf4dv').then(function(database){
 
