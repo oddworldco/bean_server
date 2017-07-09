@@ -28,7 +28,7 @@ mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mla
  // Collections
  test_db = db.collection('beantest'); //TODO: change this to real database after test
   // Start Server
-  app.listen(51702, function() {
+  app.listen(process.env.PORT || 51702, function() {
     console.log('Server: Running on port 51702');
   });
 
