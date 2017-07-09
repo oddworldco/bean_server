@@ -22,14 +22,14 @@ app.use(function(req, res, next) {
   next();
 });
 // 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@ds019746.mlab.com:19746/heroku_8d8nzwb1'
-mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mlab.com:3000/heroku_1gsdf4dv').then(function(database){
+mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mlab.com:51702/heroku_1gsdf4dv').then(function(database){
 
  db = database;
  // Collections
  test_db = db.collection('beantest'); //TODO: change this to real database after test
   // Start Server
   app.listen(process.env.PORT || 3000, function() {
-    console.log('Server: Running on port 51702');
+    console.log('Server: Running on port 3000');
   });
 
 }, function(err) {
