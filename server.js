@@ -51,7 +51,6 @@ app.post('/collect_data', function (req, res, next) {
 })
 
 app.get('/test_server', function (req, res) {
-  console.log('req: ', req.body);
 
   console.log('message!!');
   res.send('Successful request!!');
