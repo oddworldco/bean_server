@@ -5,7 +5,6 @@ var Bean = require('ble-bean');
 var beanStream = require('ble-bean-stream');
 var express = require('express');
 var bodyParser = require('body-parser');
-var cors = require('cors');
 var app = express();
 
 
@@ -15,7 +14,6 @@ var mongo = require('mongodb-bluebird');
 var db;
 var fertility_data, test_db;
 
-app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
@@ -23,7 +21,6 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");;
   next();
 });
-
 // 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@ds019746.mlab.com:19746/heroku_8d8nzwb1'
 mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mlab.com:3000/heroku_1gsdf4dv').then(function(database){
 
@@ -38,8 +35,6 @@ mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mla
 }, function(err) {
   console.log(err);
 });
-
-app.options('*', cors());
 
 app.post('/collect_data', function (req, res, next) {
   console.log('req: ', req.body);
