@@ -24,8 +24,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.options('*', cors());
-
 // 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@ds019746.mlab.com:19746/heroku_8d8nzwb1'
 mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mlab.com:3000/heroku_1gsdf4dv').then(function(database){
 
@@ -40,6 +38,8 @@ mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mla
 }, function(err) {
   console.log(err);
 });
+
+app.options('*', cors());
 
 app.post('/collect_data', function (req, res, next) {
   console.log('req: ', req.body);
