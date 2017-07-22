@@ -46,7 +46,7 @@ app.post('/collect_data', function (req, res, next) {
 
 
   // to do: handle new sensortag
-  test_db.update({ 'uuid': uuid }, {'$push': {'data': {'timeStamp': timeStamp, 'temp': temp}}})
+  test_db.insert({ 'uuid': uuid, 'timeStamp': timeStamp, 'temp': temp})
 
   res.send('Got a POST request');
 })
