@@ -1,7 +1,6 @@
 'use strict';
 require('dotenv').load();
 
-var Bean = require('ble-bean');
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
