@@ -52,7 +52,7 @@ app.post('/collect_data', function (req, res, next) {
   res.send('Got a POST request');
 })
 
-app.get('/test_server', function (req, res) {
+app.get('/test', function (req, res) {
 
   console.log('message!!');
   res.send('Successful request!!');
