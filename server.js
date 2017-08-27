@@ -9,8 +9,8 @@ var app = express();
 var MongoClient = require('mongodb').MongoClient;
 var mongo = require('mongodb-bluebird');
 
-var db;
-var fertility_data, test_db;
+var collection = 'smartypants_trial1';
+var db, fertility_data, test_db;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -24,9 +24,8 @@ app.use(function(req, res, next) {
 mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mlab.com:51702/heroku_1gsdf4dv').then(function(database){
 
  db = database;
- collectionName = 'smartypants_trial1'
  // Collections
- test_db = db.collection(collectionName); //TODO: change this to real database after test
+ test_db = db.collection(collection); //TODO: change this to real database after test
   // Start Server
   app.listen(process.env.PORT || 3000, function() {
     console.log('Server: Running on port 3000');
@@ -47,7 +46,7 @@ app.post('/collect_data', function (req, res, next) {
   // test_db.update({ 'uuid': uuid }, {'$push': {'data': {'timeStamp': timeStamp, 'temp': temp}}})
   //test_db.insert({'uuid': uuid, 'timeStamp': timeStamp, 'temp': temp})
 
-  res.send('Got a POST request. Data sent to mlab collection ' + collectionName);
+  res.send('Got a POST request. Data sent to mlab collection '+collection);
 })
 
 app.get('/test', function (req, res) {
