@@ -24,8 +24,9 @@ app.use(function(req, res, next) {
 mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mlab.com:51702/heroku_1gsdf4dv').then(function(database){
 
  db = database;
+ collectionName = 'smartypants_trial1'
  // Collections
- test_db = db.collection('smartypants_trial1'); //TODO: change this to real database after test
+ test_db = db.collection(collectionName); //TODO: change this to real database after test
   // Start Server
   app.listen(process.env.PORT || 3000, function() {
     console.log('Server: Running on port 3000');
@@ -46,7 +47,7 @@ app.post('/collect_data', function (req, res, next) {
   // test_db.update({ 'uuid': uuid }, {'$push': {'data': {'timeStamp': timeStamp, 'temp': temp}}})
   //test_db.insert({'uuid': uuid, 'timeStamp': timeStamp, 'temp': temp})
 
-  res.send('Got a POST request');
+  res.send('Got a POST request. Data sent to mlab collection ' + collectionName);
 })
 
 app.get('/test', function (req, res) {
