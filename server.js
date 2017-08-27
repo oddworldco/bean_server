@@ -25,7 +25,7 @@ mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mla
 
  db = database;
  // Collections
- test_db = db.collection(collection); //TODO: change this to real database after test
+ test_db = db.collection('smartypants_trial1'); //TODO: change this to real database after test
   // Start Server
   app.listen(process.env.PORT || 3000, function() {
     console.log('Server: Running on port 3000');
@@ -37,14 +37,14 @@ mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mla
 
 app.post('/collect_data', function (req, res, next) {
   console.log('req: ', req.body);
-  let request = req.body;
-      // timeStamp = request.timeStamp,
-      // uuid = request.uuid,
-      // temp = request.temp;
+  let request = req.body,
+      timeStamp = request.timeStamp,
+      uuid = request.uuid,
+      temp = request.temp;
 
   // to do: handle new sensortag
   // test_db.update({ 'uuid': uuid }, {'$push': {'data': {'timeStamp': timeStamp, 'temp': temp}}})
-  //test_db.insert({'uuid': uuid, 'timeStamp': timeStamp, 'temp': temp})
+  test_db.insert({'uuid': uuid, 'timeStamp': timeStamp, 'temp': temp})
 
   res.send('Got a POST request. Data sent to mlab collection '+collection);
 })
