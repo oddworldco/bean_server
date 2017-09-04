@@ -24,8 +24,8 @@ app.use(function(req, res, next) {
 mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mlab.com:51702/heroku_1gsdf4dv').then(function(database){
 
  db = database;
- collection = 'beantest'
- //'smartypants_trial1'
+ collection = 'smartypants_trial1'
+ //'beantest'
 
  // Collections
  test_db = db.collection(collection); //TODO: change this to real database after test
