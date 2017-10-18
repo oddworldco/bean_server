@@ -10,7 +10,7 @@ var MongoClient = require('mongodb').MongoClient;
 var mongo = require('mongodb-bluebird');
 
 var collection = 'smartypants_trial1';
-var db, fertility_data, test_db, collection;
+var db, fertility_data, test_db, collection, prod_db;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -28,7 +28,8 @@ mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mla
  //'beantest'
 
  // Collections
- test_db = db.collection(collection); //TODO: change this to real database after test
+ prod_db = db.collection(collection); //TODO: change this to real database after test
+ test_db = db.collection('beantest');
   // Start Server
   app.listen(process.env.PORT || 3000, function() {
     console.log('Server: Running on port 3000');
@@ -45,11 +46,34 @@ app.post('/collect_data', function (req, res, next) {
         timeStamp = request.timeStamp,
         uuid = request.uuid;
 
-  test_db.insert({'uuid': request.uuid, 'timeStamp': timeStamp, 'data': data})
+  prod_db.insert({'uuid': request.uuid, 'timeStamp': timeStamp, 'data': data})
   res.send('Got a POST request. Data sent to mlab collection '+collection);
 })
 
 app.post('/ios_data', function (req, res, next) {
+  console.log('req: ', req.body);
+  let request = req.body,
+        data = request.data,
+        timeStamp = request.timeStamp,
+        uuid = request.uuid;
+
+  prod_db.insert({'data': request})
+
+  res.send('Got a POST request. Data sent to mlab collection '+collection);
+})
+
+app.post('/web_test', function (req, res, next) {
+  console.log('req: ', req.body);
+  let request = req.body,
+        data = request.data,
+        timeStamp = request.timeStamp,
+        uuid = request.uuid;
+
+  test_db.insert({'uuid': request.uuid, 'timeStamp': timeStamp, 'data': data})
+  res.send('Got a POST request. Data sent to mlab collection '+collection);
+})
+
+app.post('/ios_test', function (req, res, next) {
   console.log('req: ', req.body);
   let request = req.body,
         data = request.data,
