@@ -45,7 +45,17 @@ app.post('/collect_data', function (req, res, next) {
         timeStamp = request.timeStamp,
         uuid = request.uuid;
 
-  // test_db.update({ 'uuid': uuid }, {'$push': {'data': {'timeStamp': timeStamp, 'temp': temp}}})
+  test_db.insert({'uuid': request.uuid, 'timeStamp': timeStamp, 'data': data})
+  res.send('Got a POST request. Data sent to mlab collection '+collection);
+})
+
+app.post('/ios_data', function (req, res, next) {
+  console.log('req: ', req.body);
+  let request = req.body,
+        data = request.data,
+        timeStamp = request.timeStamp,
+        uuid = request.uuid;
+
   test_db.insert({'data': request})
 
   res.send('Got a POST request. Data sent to mlab collection '+collection);
