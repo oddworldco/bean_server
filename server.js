@@ -46,7 +46,7 @@ app.post('/collect_data', function (req, res, next) {
         uuid = request.uuid;
 
   // test_db.update({ 'uuid': uuid }, {'$push': {'data': {'timeStamp': timeStamp, 'temp': temp}}})
-  test_db.insert({'request': request})
+  test_db.insert({'data': request})
 
   res.send('Got a POST request. Data sent to mlab collection '+collection);
 })
