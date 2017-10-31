@@ -79,9 +79,9 @@ app.post('/ios_test', function (req, res, next) {
         data = request.data,
         timeStamp = request.timeStamp,
         uuid = request.uuid,
-        timeStamp = Date();
+        timeStamp = new Date();
 
-  request["time"] = timeStamp;
+  request["time"] = timeStamp.toUTCString();
   test_db.insert({'data': request})
 
   res.send('Got a POST request. Data sent to mlab collection '+collection);
