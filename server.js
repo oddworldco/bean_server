@@ -79,7 +79,7 @@ app.post('/ios_test', function (req, res, next) {
         data = request.data,
         timeStamp = request.timeStamp,
         uuid = request.uuid,
-        timeStamp = new Date();
+        timeStamp = Date();
 
   request["time"] = timeStamp.toString();
   test_db.insert({'data': request})
