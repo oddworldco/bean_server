@@ -50,18 +50,6 @@ app.post('/collect_data', function (req, res, next) {
   res.send('Got a POST request. Data sent to mlab collection '+collection);
 })
 
-app.post('/ios_data', function (req, res, next) {
-  console.log('req: ', req.body);
-  let request = req.body,
-        data = request.data,
-        timeStamp = request.timeStamp,
-        uuid = request.uuid;
-
-  prod_db.insert({'data': request})
-
-  res.send('Got a POST request. Data sent to mlab collection '+collection);
-})
-
 app.post('/web_test', function (req, res, next) {
   console.log('req: ', req.body);
   let request = req.body,
@@ -70,6 +58,20 @@ app.post('/web_test', function (req, res, next) {
         uuid = request.uuid;
 
   test_db.insert({'uuid': request.uuid, 'timeStamp': timeStamp, 'data': data})
+  res.send('Got a POST request. Data sent to mlab collection '+collection);
+})
+
+app.post('/ios_data', function (req, res, next) {
+  console.log('req: ', req.body);
+  let request = req.body,
+      data = request.data,
+      timeStamp = request.timeStamp,
+      uuid = request.uuid;
+      timeStamp = new Date();
+  
+  request["time"] = timeStamp.toUTCString();
+  prod_db.insert({'data': request})
+
   res.send('Got a POST request. Data sent to mlab collection '+collection);
 })
 
