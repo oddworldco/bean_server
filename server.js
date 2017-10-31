@@ -78,7 +78,7 @@ app.post('/ios_test', function (req, res, next) {
   let request = req.body,
         data = request.data,
         timeStamp = request.timeStamp,
-        uuid = request.uuid,
+        uuid = request.uuid;
         timeStamp = new Date();
 
   request["time"] = timeStamp.toUTCString();
