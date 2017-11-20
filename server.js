@@ -9,8 +9,7 @@ var app = express();
 var MongoClient = require('mongodb').MongoClient;
 var mongo = require('mongodb-bluebird');
 
-var collection = 'smartypants_trial1';
-var db, fertility_data, test_db, collection, prod_db;
+var db, fertility_data, test_db, prod_db;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -24,11 +23,10 @@ app.use(function(req, res, next) {
 mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mlab.com:51702/heroku_1gsdf4dv').then(function(database){
 
  db = database;
- collection = 'smartypants_trial1'
  //'beantest'
 
  // Collections
- prod_db = db.collection(collection); //TODO: change this to real database after test
+ prod_db = db.collection('trial_11_2017_start'); //TODO: change this to real database after test
  test_db = db.collection('beantest');
   // Start Server
   app.listen(process.env.PORT || 3000, function() {
@@ -47,7 +45,7 @@ app.post('/collect_data', function (req, res, next) {
         uuid = request.uuid;
 
   prod_db.insert({'uuid': request.uuid, 'timeStamp': timeStamp, 'data': data})
-  res.send('Got a POST request. Data sent to mlab collection '+collection);
+  res.send('Got a POST request. Data sent to mlab collection');
 })
 
 app.post('/web_test', function (req, res, next) {
@@ -58,7 +56,7 @@ app.post('/web_test', function (req, res, next) {
         uuid = request.uuid;
 
   test_db.insert({'uuid': request.uuid, 'timeStamp': timeStamp, 'data': data})
-  res.send('Got a POST request. Data sent to mlab collection '+collection);
+  res.send('Got a POST request. Data sent to mlab collection');
 })
 
 app.post('/ios_data', function (req, res, next) {
@@ -72,7 +70,7 @@ app.post('/ios_data', function (req, res, next) {
   request["time"] = timeStamp.toUTCString();
   prod_db.insert({'data': request})
 
-  res.send('Got a POST request. Data sent to mlab collection '+collection);
+  res.send('Got a POST request. Data sent to mlab collection');
 })
 
 app.post('/ios_test', function (req, res, next) {
@@ -84,9 +82,10 @@ app.post('/ios_test', function (req, res, next) {
         timeStamp = new Date();
 
   request["time"] = timeStamp.toUTCString();
+  //‘YYYY-MM-DD HH:MI:SS ZONE’
   test_db.insert({'data': request})
 
-  res.send('Got a POST request. Data sent to mlab collection '+collection);
+  res.send('Got a POST request. Data sent to mlab collection');
 })
 
 app.get('/test', function (req, res) {
