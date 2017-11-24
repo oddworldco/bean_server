@@ -28,6 +28,8 @@ mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mla
  // Collections
  prod_db = db.collection('trial_11_2017_start'); //TODO: change this to real database after test
  test_db = db.collection('beantest');
+ bbt_db = db.collection('bbt_data_trial_11_2017');
+ lh_db = db.collection('lh_data_trial_11_2017');
   // Start Server
   app.listen(process.env.PORT || 3000, function() {
     console.log('Server: Running on port 3000');
@@ -87,6 +89,32 @@ app.post('/ios_test', function (req, res, next) {
 
   res.send('Got a POST request. Data sent to mlab collection');
 })
+
+app.post('/bbt_data', function (req, res, next) {
+  console.log('req: ', req.body);
+  let request = req.body,
+      data = request.data,
+      timeStamp = new Date();
+  
+  request["time"] = timeStamp.toUTCString();
+  bbt_db.insert({'data': request})
+
+  res.send('Got a POST request. Data sent to mlab collection');
+})
+
+app.post('/lh_data', function (req, res, next) {
+  console.log('req: ', req.body);
+  let request = req.body,
+      data = request.data,
+      timeStamp = new Date();
+  
+  request["time"] = timeStamp.toUTCString();
+  lh_db.insert({'data': request})
+
+  res.send('Got a POST request. Data sent to mlab collection');
+})
+
+
 
 app.get('/test', function (req, res) {
 
