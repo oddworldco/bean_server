@@ -9,7 +9,7 @@ var app = express();
 var MongoClient = require('mongodb').MongoClient;
 var mongo = require('mongodb-bluebird');
 
-var db, fertility_data, test_db, prod_db;
+var db, fertility_data, test_db, prod_db, bbt_db, lh_db;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
