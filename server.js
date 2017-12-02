@@ -50,12 +50,10 @@ app.post('/signup', function (req, res, next) {
   prod_db.insert({'data': request})
 
   res.send('Got a POST request. Data sent to mlab collection');
-  return res('success!')
 })
 
 app.get('/test', function (req, res) {
 
   console.log('message!!');
   res.send('Successful request!!');
-  return res('error')
 })
