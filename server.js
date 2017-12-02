@@ -24,7 +24,7 @@ app.use(function(req, res, next) {
  
 // mongo.connect('mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@ds121192.mlab.com:21192/heroku_q6lkjqhb').then(function(database){
 
-mongo.connect('mongodb://heroku_q6lkjqhb:1g3gogthbor56d5kfp2t3lig43@ds121192.mlab.com:21192/heroku_q6lkjqhb').then(function(database){
+mongo.connect('mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@ds121192.mlab.com:21192/heroku_q6lkjqhb').then(function(database){
 
  db = database;
  //'beantest'
@@ -50,10 +50,12 @@ app.post('/signup', function (req, res, next) {
   prod_db.insert({'data': request})
 
   res.send('Got a POST request. Data sent to mlab collection');
+  return res('success!')
 })
 
 app.get('/test', function (req, res) {
 
   console.log('message!!');
   res.send('Successful request!!');
+  return res('error')
 })
