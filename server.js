@@ -42,22 +42,24 @@ mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mla
 app.post('/collect_data', function (req, res, next) {
   console.log('req: ', req.body);
   let request = req.body,
-        data = request.data,
-        timeStamp = request.timeStamp,
-        uuid = request.uuid;
+      data = request.data,
+      timeStamp = new Date();
+  
+  request["time"] = timeStamp.toUTCString();
+  prod_db.insert({'data': request})
 
-  prod_db.insert({'uuid': request.uuid, 'timeStamp': timeStamp, 'data': data})
   res.send('Got a POST request. Data sent to mlab collection');
 })
 
 app.post('/web_test', function (req, res, next) {
   console.log('req: ', req.body);
   let request = req.body,
-        data = request.data,
-        timeStamp = request.timeStamp,
-        uuid = request.uuid;
+      data = request.data,
+      timeStamp = new Date();
+  
+  request["time"] = timeStamp.toUTCString();
+  test_db.insert({'data': request})
 
-  test_db.insert({'uuid': request.uuid, 'timeStamp': timeStamp, 'data': data})
   res.send('Got a POST request. Data sent to mlab collection');
 })
 
@@ -65,8 +67,6 @@ app.post('/ios_data', function (req, res, next) {
   console.log('req: ', req.body);
   let request = req.body,
       data = request.data,
-      timeStamp = request.timeStamp,
-      uuid = request.uuid;
       timeStamp = new Date();
   
   request["time"] = timeStamp.toUTCString();
@@ -79,8 +79,6 @@ app.post('/ios_test', function (req, res, next) {
   console.log('req: ', req.body);
   let request = req.body,
         data = request.data,
-        timeStamp = request.timeStamp,
-        uuid = request.uuid;
         timeStamp = new Date();
 
   request["time"] = timeStamp.toUTCString();
