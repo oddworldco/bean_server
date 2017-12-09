@@ -9,7 +9,7 @@ var app = express();
 var MongoClient = require('mongodb').MongoClient;
 var mongo = require('mongodb-bluebird');
 
-var db, fertility_data, test_db, prod_db, bbt_db, lh_db;
+var db, test_db, prod_db;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -19,20 +19,19 @@ app.use(function(req, res, next) {
   next();
 });
  
-// 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@ds019746.mlab.com:19746/heroku_8d8nzwb1'
-mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mlab.com:51702/heroku_1gsdf4dv').then(function(database){
+// mongo.connect('mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@ds121192.mlab.com:21192/heroku_q6lkjqhb').then(function(database){
+
+mongo.connect('mongodb://heroku_q6lkjqhb:1g3gogthbor56d5kfp2t3lig43@ds121192.mlab.com:21192/heroku_q6lkjqhb').then(function(database){
 
  db = database;
  //'beantest'
 
  // Collections
- prod_db = db.collection('trial_11_2017_start'); //TODO: change this to real database after test
+ prod_db = db.collection('trial_11_2017_start');
  test_db = db.collection('beantest');
- bbt_db = db.collection('bbt_data_trial_11_2017');
- lh_db = db.collection('lh_data_trial_11_2017');
   // Start Server
-  app.listen(process.env.PORT || 3000, function() {
-    console.log('Server: Running on port 3000');
+  app.listen(process.env.PORT || 8080, function() {
+    console.log('Server: Running on port 8080');
   });
 
 }, function(err) {
@@ -45,10 +44,10 @@ app.post('/collect_data', function (req, res, next) {
       data = request.data,
       timeStamp = new Date();
   
-  request["time"] = timeStamp.toUTCString();
-  prod_db.insert({'data': request})
+  data["time"] = timeStamp.toUTCString();
+  prod_db.insert({'data': data})
 
-  res.send('Got a POST request. Data sent to mlab collection');
+  res.send('Got a POST request. Data sent to mlab collection trial_11_2017_start');
 })
 
 app.post('/web_test', function (req, res, next) {
@@ -57,10 +56,9 @@ app.post('/web_test', function (req, res, next) {
       data = request.data,
       timeStamp = new Date();
   
-  request["time"] = timeStamp.toUTCString();
-  test_db.insert({'data': request})
-
-  res.send('Got a POST request. Data sent to mlab collection');
+  data["time"] = timeStamp.toUTCString();
+  test_db.insert({'data': data});
+  res.send('Got a POST request. Data sent to mlab collection beantest');
 })
 
 app.post('/ios_data', function (req, res, next) {
@@ -73,6 +71,7 @@ app.post('/ios_data', function (req, res, next) {
   prod_db.insert({'data': request})
 
   res.send('Got a POST request. Data sent to mlab collection');
+  return res('success!')
 })
 
 app.post('/ios_test', function (req, res, next) {
@@ -112,10 +111,9 @@ app.post('/lh_data', function (req, res, next) {
   res.send('Got a POST request. Data sent to mlab collection');
 })
 
-
-
 app.get('/test', function (req, res) {
 
   console.log('message!!');
   res.send('Successful request!!');
+  return res('error')
 })
