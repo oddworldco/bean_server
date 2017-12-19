@@ -45,7 +45,7 @@ app.post('/collect_data', function (req, res, next) {
         data = request.data,
         timeStamp = new Date();
   
-  request["time"] = timeStamp.toUTCString();
+  data["time"] = timeStamp.toUTCString();
   prod_db.insert({'data': data})
   res.send('Got a POST request. Data sent to mlab collection');
 })
@@ -56,7 +56,7 @@ app.post('/web_test', function (req, res, next) {
         data = request.data,
         timeStamp = new Date();
   
-  request["time"] = timeStamp.toUTCString();
+  data["time"] = timeStamp.toUTCString();
   test_db.insert({'data': data})
   res.send('Got a POST request. Data sent to mlab collection');
 })
