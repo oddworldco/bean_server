@@ -48,6 +48,12 @@ app.post('/heather_data', function (req, res, next) {
   res.send('Got a POST request. Data sent to mlab collection');
 })
 
+app.get('/heather_data', function (req, res) {
+
+  console.log('message!!');
+  res.send('Successful request!!');
+})
+
 app.post('/collect_data', function (req, res, next) {
   console.log('req: ', req.body);
   let request = req.body,
