@@ -39,6 +39,15 @@ mongo.connect('mongodb://heroku_1gsdf4dv:99kfcmdds2utedjvtbdkrvuj92@ds151702.mla
   console.log(err);
 });
 
+app.post('/heather_data', function (req, res, next) {
+  console.log('req: ', req.body);
+  let request = req.body,
+        data = request.data;
+
+  prod_db.insert({'data': data})
+  res.send('Got a POST request. Data sent to mlab collection');
+})
+
 app.post('/collect_data', function (req, res, next) {
   console.log('req: ', req.body);
   let request = req.body,
